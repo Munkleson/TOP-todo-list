@@ -14,26 +14,31 @@ const newListForm = () => {
 
     const listTitleInput = document.createElement('input');
     listTitleInput.placeholder = 'Title';
+    listTitleInput.maxLength = '30';
     listTitleInput.name = "title";
     listFormDiv.append(listTitleInput);
 
     const listDescriptionInput = document.createElement('input');
     listDescriptionInput.placeholder = 'Description';
+    listDescriptionInput.maxLength = '50';
     listDescriptionInput.name = "description";
     listFormDiv.append(listDescriptionInput);
 
     const listDueDateInput = document.createElement('input');
     listDueDateInput.placeholder = 'Due date';
+    listDueDateInput.maxLength = '20';
     listDueDateInput.name = "due_date";
     listFormDiv.append(listDueDateInput);
 
     const listPriorityInput = document.createElement('input');
     listPriorityInput.placeholder = 'Priority - Enter a value from 1 to 10';
+    listPriorityInput.maxLength = '2';
     listPriorityInput.name = "priority";
     listFormDiv.append(listPriorityInput);
 
     const listNoteInput = document.createElement('input');
     listNoteInput.placeholder = "Notes";
+    listNoteInput.maxLength = '200';
     listNoteInput.name = "notes";
     listFormDiv.append(listNoteInput);
 

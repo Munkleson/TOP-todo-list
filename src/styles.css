@@ -38,6 +38,10 @@ h1 {
     margin: auto;
 }
 
+p {
+    margin-bottom: 10px;
+}
+
 .navButtons {
     width: 100px;
     height: 50px;
@@ -131,7 +135,7 @@ h1 {
 
 .listCard {
     width: 200px;
-    height: 300px;
+    min-height: 300px;
     border: 1px solid black;
     border-radius: 10px;
     background-color: purple;
