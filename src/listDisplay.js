@@ -56,6 +56,47 @@ const newListCard = (title, description, dueDate, priority, notes, listIdentifie
     });
 };
 
+const innerListCardCreate = (title, description, dueDate, priority, notes, listIdentifier) => {
+    const listContainer = document.querySelector('.innerFolder');
+
+    const listCard = document.createElement('div');
+    listCard.classList.add('listCard');
+    listCard.draggable = true;
+    listCard.setAttribute('id', `listCard#${listIdentifier}`);
+    listContainer.append(listCard);
+
+    const listCardTitle = document.createElement('p');
+    listCardTitle.innerHTML = `<a class=listCardLegend>Title:</a> ${title}`;
+    listCard.append(listCardTitle);
+
+    const listCardDescription = document.createElement('p');
+    listCardDescription.innerHTML = `<a class=listCardLegend>Description:</a> ${description}`;
+    listCard.append(listCardDescription);
+
+    const listCardDueDate = document.createElement('p');
+    listCardDueDate.innerHTML = `<a class=listCardLegend>Due by:</a> ${dueDate}`;
+    listCard.append(listCardDueDate);
+
+    const listCardpriority = document.createElement('p');
+    listCardpriority.innerHTML = `<a class=listCardLegend>Priority:</a> ${priority}`;
+    listCard.append(listCardpriority);
+
+    const listCardNotes = document.createElement('p');
+    listCardNotes.innerHTML = `<a class=listCardLegend>Notes:</a> ${notes}`;
+    listCard.append(listCardNotes);
+
+    const deleteListCardButton = document.createElement('button');
+    deleteListCardButton.innerHTML = 'Delete card';
+    listCard.append(deleteListCardButton);
+
+    deleteListCardButton.addEventListener('click', (event) => {
+        const uniqueIdentifier = event.target.parentElement.id.split('').splice(9).join("") * 1;
+        const uniqueIndex = listArray.findIndex(element => element.listIdentifier === uniqueIdentifier);
+        deletedListCards.push(listArray.splice(uniqueIndex, 1)[0]);
+        event.target.parentElement.remove();
+    });
+};
+
 const undoListDelete = () => {
     if (deletedListCards.length > 0){
         const mostRecentDeletedList = deletedListCards[deletedListCards.length - 1];
@@ -65,4 +106,4 @@ const undoListDelete = () => {
     };
 };
 
-export { newListCard, undoListDelete, deletedListCards };
+export { newListCard, undoListDelete, deletedListCards, innerListCardCreate };

@@ -1,3 +1,6 @@
+import { listArray, projectArray } from "./constructors";
+import { newListCard } from "./listDisplay";
+import { newProjectFolder } from "./projectDisplay";
 
 
 const newListForm = () => {
@@ -48,8 +51,6 @@ const newListForm = () => {
 
 let newListFormActive = false;
 
-
-
 const newProjectForm = () => {
     const projectFormContainer = document.createElement('div');
     projectFormContainer.classList.add('projectFormContainer');
@@ -83,6 +84,18 @@ const newProjectForm = () => {
 
 let newProjectFormActive = false;
 
+const reopenProjectFolders = () => {
+    projectArray.forEach(element => {
+        newProjectFolder(element.title, element.description, element.projectIdentifier);
+        console.log(element);
+    });
+};
 
-export { newListForm, newListFormActive, newProjectForm, newProjectFormActive };
+const reopenListCards = () => {
+    listArray.forEach(element => {
+        newListCard(element.title, element.description, element.dueDate, element.priority, element.notes, element.listIdentifier);
+    });
+};
+
+export { newListForm, newListFormActive, newProjectForm, newProjectFormActive, reopenListCards, reopenProjectFolders };
 
