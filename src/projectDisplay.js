@@ -30,7 +30,8 @@ const newProjectFolder = (title, description, projectIdentifier) => {
         const transferredObject = event.dataTransfer.getData('application/json');
         const data = JSON.parse(transferredObject);
         
-        const uniqueProjectIdentifier = event.target.parentElement.id.split('').splice(14).join("") * 1;
+        const uniqueProjectIdentifier = event.target.id.split('').splice(14).join("") * 1;
+        console.log(uniqueProjectIdentifier);
         projectArray[uniqueProjectIdentifier].lists.push(data);
 
         //// removing list from listArray

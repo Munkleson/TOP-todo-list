@@ -65,4 +65,4 @@ const undoListDelete = () => {
     };
 };
 
-export { newListCard, undoListDelete };
+export { newListCard, undoListDelete, deletedListCards };

@@ -1,7 +1,7 @@
 import { newListForm, newListFormActive, newProjectForm, newProjectFormActive } from "./domFunctions";
 import { NewList, listArray, listIdentifier, projectArray, NewProject, projectIdentifier } from "./constructors";
 import './styles.css';
-import { newListCard, undoListDelete } from "./listDisplay";
+import { newListCard, undoListDelete, deletedListCards } from "./listDisplay";
 import { newProjectFolder } from "./projectDisplay";
 
 //// creates the popup window to create a form to enter a new list
@@ -47,8 +47,10 @@ newListButton[0].addEventListener('click', () => {
 
 const undoListDeleteButton = document.querySelector('.undoListDelete');
 undoListDeleteButton.addEventListener('click', () => {
-    undoListDelete();
-    listIdentifier++;
+    if (deletedListCards.length > 0){
+        undoListDelete();
+        listIdentifier++;
+    };
 });
 
 
@@ -74,7 +76,7 @@ newProjectButton.addEventListener('click', () => {
             const formDescription = form.elements['description'].value;
 
             projectArray.push(new NewProject(formTitle, formDescription, projectIdentifier));
-            newProjectFolder(formTitle, formDescription);
+            newProjectFolder(formTitle, formDescription, projectIdentifier);
 
             projectFormContainer.remove();
             newProjectFormActive = false;
