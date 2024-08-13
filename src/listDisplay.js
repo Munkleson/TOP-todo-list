@@ -1,4 +1,5 @@
-import { NewList, listArray, listIdentifier } from './constructors.js'
+import { NewList, listArray, listIdentifier, projectArray } from './constructors.js'
+import { currentFolder, folderActive } from './projectDisplay.js';
 
 const deletedListCards = [];
 
@@ -56,6 +57,23 @@ const newListCard = (title, description, dueDate, priority, notes, listIdentifie
     });
 };
 
+const undoListDelete = () => { //// for both the home page and within a folder
+    if (!folderActive){ //// home page
+        if (deletedListCards.length > 0){
+            const mostRecentDeletedList = deletedListCards[deletedListCards.length - 1];
+            // listArray.push(new NewList(mostRecentDeletedList.title, mostRecentDeletedList.description, mostRecentDeletedList.dueDate, mostRecentDeletedList.priority, mostRecentDeletedList.notes));
+            newListCard(mostRecentDeletedList.title, mostRecentDeletedList.description, mostRecentDeletedList.dueDate, mostRecentDeletedList.priority, mostRecentDeletedList.notes, mostRecentDeletedList.listIdentifier);
+            listArray.push(deletedListCards.splice(deletedListCards.length - 1, 1)[0]);
+            // deletedListCards.splice(deletedListCards.length - 1, 1);
+        };
+    } else if (folderActive){ //// within a folder
+        const targetedProjectFolder = projectArray.find(element => element.projectIdentifier === currentFolder);
+        const target = targetedProjectFolder.deletedLists[targetedProjectFolder.deletedLists.length - 1];
+        innerListCardCreate(target.title, target.description, target.dueDate, target.priority, target.notes, target.listIdentifier);
+        targetedProjectFolder.lists.push(targetedProjectFolder.deletedLists.splice(targetedProjectFolder.deletedLists.length - 1, 1)[0]);
+    }
+};
+
 const innerListCardCreate = (title, description, dueDate, priority, notes, listIdentifier) => {
     const listContainer = document.querySelector('.innerFolder');
 
@@ -90,20 +108,12 @@ const innerListCardCreate = (title, description, dueDate, priority, notes, listI
     listCard.append(deleteListCardButton);
 
     deleteListCardButton.addEventListener('click', (event) => {
+        const targetedProjectFolder = projectArray.find(element => element.projectIdentifier === currentFolder); /// variable for the current folder so you can push or splice from the arrays
         const uniqueIdentifier = event.target.parentElement.id.split('').splice(9).join("") * 1;
-        const uniqueIndex = listArray.findIndex(element => element.listIdentifier === uniqueIdentifier);
-        deletedListCards.push(listArray.splice(uniqueIndex, 1)[0]);
+        const uniqueIndex = targetedProjectFolder.lists.findIndex(element => element.listIdentifier === uniqueIdentifier);
+        targetedProjectFolder.deletedLists.push(targetedProjectFolder.lists.splice(uniqueIndex, 1)[0]);
         event.target.parentElement.remove();
     });
-};
-
-const undoListDelete = () => {
-    if (deletedListCards.length > 0){
-        const mostRecentDeletedList = deletedListCards[deletedListCards.length - 1];
-        listArray.push(new NewList(mostRecentDeletedList.title, mostRecentDeletedList.description, mostRecentDeletedList.dueDate, mostRecentDeletedList.priority, mostRecentDeletedList.notes));
-        newListCard(mostRecentDeletedList.title, mostRecentDeletedList.description, mostRecentDeletedList.dueDate, mostRecentDeletedList.priority, mostRecentDeletedList.notes, listIdentifier);
-        deletedListCards.splice(deletedListCards.length - 1, 1);
-    };
 };
 
 export { newListCard, undoListDelete, deletedListCards, innerListCardCreate };

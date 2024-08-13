@@ -23,6 +23,7 @@ class NewProject {
         this.title = title;
         this.description = description;
         this.lists = [];
+        this.deletedLists = [];
         this.projectIdentifier = projectIdentifier;
     }
 }

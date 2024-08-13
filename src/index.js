@@ -47,8 +47,9 @@ const undoListDeleteButton = document.querySelector('.undoListDelete');
 undoListDeleteButton.addEventListener('click', () => {
     if (deletedListCards.length > 0){
         undoListDelete();
-        listIdentifier++;
-    };
+    } else if (folderActive){
+        undoListDelete();
+    }
 });
 
 

@@ -3,6 +3,7 @@ import { reopenListCards, reopenProjectFolders } from './domFunctions.js';
 import { innerListCardCreate, newListCard } from './listDisplay.js';
 
 let folderActive = false;
+let currentFolder;
 
 const newProjectFolder = (title, description, projectIdentifier) => {
     const projectContainer = document.querySelector('.projectContainer');
@@ -58,6 +59,10 @@ const newProjectFolder = (title, description, projectIdentifier) => {
         projectContainer.remove();
         listContainer.remove();
 
+        const closeFolderButton = document.createElement('button');
+        closeFolderButton.innerText = "Close Folder";
+        document.body.append(closeFolderButton);
+
         //////// opens the folder to view all the cards within
 
         const innerFolder = document.createElement('div');
@@ -65,15 +70,14 @@ const newProjectFolder = (title, description, projectIdentifier) => {
         document.body.append(innerFolder);
         
         const projectIndex = event.target.id.split('').splice(14).join("") * 1;
+        currentFolder = projectIndex;
         // const uniqueIndex = listArray.findIndex(element => element.listIdentifier === uniqueIdentifier);
         projectArray[projectIndex].lists.forEach(element => {
-            innerListCardCreate(element.title, element.description, element.dueDate, element.priority, element.notes);
+            innerListCardCreate(element.title, element.description, element.dueDate, element.priority, element.notes, element.listIdentifier);
         });
 
 
-        const closeFolderButton = document.createElement('button');
-        closeFolderButton.innerText = "Close Folder";
-        document.body.append(closeFolderButton);
+
         //////// when you close a folder - reopens the home page and restores DOM
         closeFolderButton.addEventListener('click', (event) => {
             innerFolder.remove();
@@ -96,4 +100,4 @@ const newProjectFolder = (title, description, projectIdentifier) => {
 
 
 
-export { newProjectFolder, folderActive };
+export { newProjectFolder, folderActive, currentFolder };
