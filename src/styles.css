@@ -42,6 +42,14 @@ p {
     margin-bottom: 10px;
 }
 
+.listFormContainer input {
+    margin: 20px;
+}
+
+.projectFormContainer input {
+    margin: 20px;
+}
+
 .navButtons {
     width: 100px;
     height: 50px;

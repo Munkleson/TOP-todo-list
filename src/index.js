@@ -91,6 +91,7 @@ newProjectButton.addEventListener('click', () => {
     }
 })
 
+// export { flatpickr };
 
 
 

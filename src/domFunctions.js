@@ -1,3 +1,5 @@
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
 import { listArray, projectArray } from "./constructors";
 import { newListCard } from "./listDisplay";
 import { currentFolder, folderActive, newProjectFolder } from "./projectDisplay";
@@ -29,6 +31,11 @@ const newListForm = () => {
     listDueDateInput.maxLength = '20';
     listDueDateInput.name = "due_date";
     listFormDiv.append(listDueDateInput);
+
+    flatpickr(listDueDateInput, {
+        dateFormat: "Y-m-d",
+        minDate: "today",
+    });
 
     const listPriorityInput = document.createElement('input');
     listPriorityInput.placeholder = 'Priority - Enter a value from 1 to 10';
