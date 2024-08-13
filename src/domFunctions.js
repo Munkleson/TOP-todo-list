@@ -1,6 +1,6 @@
 import { listArray, projectArray } from "./constructors";
 import { newListCard } from "./listDisplay";
-import { newProjectFolder } from "./projectDisplay";
+import { currentFolder, folderActive, newProjectFolder } from "./projectDisplay";
 
 
 const newListForm = () => {
@@ -87,7 +87,6 @@ let newProjectFormActive = false;
 const reopenProjectFolders = () => {
     projectArray.forEach(element => {
         newProjectFolder(element.title, element.description, element.projectIdentifier);
-        console.log(element);
     });
 };
 
@@ -97,5 +96,33 @@ const reopenListCards = () => {
     });
 };
 
-export { newListForm, newListFormActive, newProjectForm, newProjectFormActive, reopenListCards, reopenProjectFolders };
+const completedTask = (target) => {
+    const currentListCard = target.parentElement;
+    const currentListCardId = currentListCard.id.split("").splice(9).join("") * 1;
+    if (folderActive){
+        const targetFolder = projectArray.find(element => element.projectIdentifier === currentFolder);
+        const currentListCardIndex = targetFolder.lists.findIndex(element => element.listIdentifier === currentListCardId); 
+        targetFolder.lists.splice(currentListCardIndex, 1);
+    } else if (!folderActive){
+        const currentListCardIndex = listArray.findIndex(element => element.listIdentifier === currentListCardId);
+        listArray.splice(currentListCardIndex, 1);
+    }
+    currentListCard.remove();
+};
+
+const returnCardToHome = (target) => { //// moves the list card back to the home page
+    const currentListCard = target.parentElement;
+    const currentListCardId = currentListCard.id.split("").splice(9).join("") * 1;
+    const targetFolder = projectArray.find(element => element.projectIdentifier === currentFolder);
+    const currentListCardIndex = targetFolder.lists.findIndex(element => element.listIdentifier === currentListCardId); 
+    const currentList = targetFolder.lists[currentListCardIndex];
+
+    // newListCard(currentList.title, currentList.description, currentList.dueDate, currentList.priority, currentList.notes, currentList.listIdentifier);
+    listArray.push(targetFolder.lists.splice(currentListCardIndex, 1)[0]);
+    // console.log(listArray);
+
+    currentListCard.remove();
+}
+
+export { newListForm, newListFormActive, newProjectForm, newProjectFormActive, reopenListCards, reopenProjectFolders, completedTask, returnCardToHome };
 

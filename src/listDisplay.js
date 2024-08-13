@@ -1,4 +1,5 @@
 import { NewList, listArray, listIdentifier, projectArray } from './constructors.js'
+import { completedTask, returnCardToHome } from './domFunctions.js';
 import { currentFolder, folderActive } from './projectDisplay.js';
 
 const deletedListCards = [];
@@ -31,6 +32,14 @@ const newListCard = (title, description, dueDate, priority, notes, listIdentifie
     const listCardNotes = document.createElement('p');
     listCardNotes.innerHTML = `<a class=listCardLegend>Notes:</a> ${notes}`;
     listCard.append(listCardNotes);
+
+    const completeButton = document.createElement('button');
+    completeButton.innerHTML = 'Completed';
+    listCard.append(completeButton);
+
+    completeButton.addEventListener('click', (event) => {
+        completedTask(event.target);
+    });
 
     const deleteListCardButton = document.createElement('button');
     deleteListCardButton.innerHTML = 'Delete card';
@@ -66,11 +75,11 @@ const undoListDelete = () => { //// for both the home page and within a folder
             listArray.push(deletedListCards.splice(deletedListCards.length - 1, 1)[0]);
             // deletedListCards.splice(deletedListCards.length - 1, 1);
         };
-    } else if (folderActive){ //// within a folder
-        const targetedProjectFolder = projectArray.find(element => element.projectIdentifier === currentFolder);
-        const target = targetedProjectFolder.deletedLists[targetedProjectFolder.deletedLists.length - 1];
-        innerListCardCreate(target.title, target.description, target.dueDate, target.priority, target.notes, target.listIdentifier);
-        targetedProjectFolder.lists.push(targetedProjectFolder.deletedLists.splice(targetedProjectFolder.deletedLists.length - 1, 1)[0]);
+    } else if (folderActive){ //// within a folder --- This will create console errors because it doesn't check if the deleted card lists is longer than 0. Harmless, so low priority to change
+            const targetedProjectFolder = projectArray.find(element => element.projectIdentifier === currentFolder);
+            const target = targetedProjectFolder.deletedLists[targetedProjectFolder.deletedLists.length - 1];
+            innerListCardCreate(target.title, target.description, target.dueDate, target.priority, target.notes, target.listIdentifier);
+            targetedProjectFolder.lists.push(targetedProjectFolder.deletedLists.splice(targetedProjectFolder.deletedLists.length - 1, 1)[0]);
     }
 };
 
@@ -103,6 +112,14 @@ const innerListCardCreate = (title, description, dueDate, priority, notes, listI
     listCardNotes.innerHTML = `<a class=listCardLegend>Notes:</a> ${notes}`;
     listCard.append(listCardNotes);
 
+    const completeButton = document.createElement('button');
+    completeButton.innerHTML = 'Completed';
+    listCard.append(completeButton);
+
+    completeButton.addEventListener('click', (event) => {
+        completedTask(event.target);
+    });
+
     const deleteListCardButton = document.createElement('button');
     deleteListCardButton.innerHTML = 'Delete card';
     listCard.append(deleteListCardButton);
@@ -113,6 +130,13 @@ const innerListCardCreate = (title, description, dueDate, priority, notes, listI
         const uniqueIndex = targetedProjectFolder.lists.findIndex(element => element.listIdentifier === uniqueIdentifier);
         targetedProjectFolder.deletedLists.push(targetedProjectFolder.lists.splice(uniqueIndex, 1)[0]);
         event.target.parentElement.remove();
+    });
+
+    const returnCard = document.createElement('button');
+    returnCard.innerHTML = 'Move list back to home';
+    listCard.append(returnCard);
+    returnCard.addEventListener('click', (event) => {
+        returnCardToHome(event.target);
     });
 };
 
