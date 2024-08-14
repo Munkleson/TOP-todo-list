@@ -2,10 +2,9 @@
 const listArray = [];
 const projectArray = [];
 
-let listIdentifier = 0;
 
 class NewList {
-    constructor(title, description, dueDate, priority, notes, checklist){
+    constructor(title, description, dueDate, priority, notes, listIdentifier){
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
@@ -16,10 +15,8 @@ class NewList {
     }
 }
 
-let projectIdentifier = 0;
-
 class NewProject {
-    constructor(title, description){
+    constructor(title, description, projectIdentifier){
         this.title = title;
         this.description = description;
         this.lists = [];
@@ -28,12 +25,4 @@ class NewProject {
     }
 }
 
-
-
-
-
-
-
-
-
-export { NewList, listArray, listIdentifier, projectArray, NewProject, projectIdentifier };
+export { NewList, listArray, projectArray, NewProject };

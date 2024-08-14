@@ -61,7 +61,7 @@ const newListForm = () => {
     listFormContainer.append(closePopupButton);
 };
 
-let newListFormActive = false;
+
 
 const newProjectForm = () => {
     const projectFormContainer = document.createElement('div');
@@ -94,7 +94,7 @@ const newProjectForm = () => {
     projectFormContainer.append(closePopupButton);
 }
 
-let newProjectFormActive = false;
+
 
 const reopenProjectFolders = () => {
     projectArray.forEach(element => {
@@ -127,8 +127,6 @@ const returnCardToHome = (target) => { //// moves the list card back to the home
     const currentListCardId = currentListCard.id.split("").splice(9).join("") * 1;
     const targetFolder = projectArray.find(element => element.projectIdentifier === currentFolder);
     const currentListCardIndex = targetFolder.lists.findIndex(element => element.listIdentifier === currentListCardId); 
-    const currentList = targetFolder.lists[currentListCardIndex];
-
     // newListCard(currentList.title, currentList.description, currentList.dueDate, currentList.priority, currentList.notes, currentList.listIdentifier);
     listArray.push(targetFolder.lists.splice(currentListCardIndex, 1)[0]);
     // console.log(listArray);
@@ -136,5 +134,5 @@ const returnCardToHome = (target) => { //// moves the list card back to the home
     currentListCard.remove();
 }
 
-export { newListForm, newListFormActive, newProjectForm, newProjectFormActive, reopenListCards, reopenProjectFolders, completedTask, returnCardToHome };
+export { newListForm, newProjectForm, reopenListCards, reopenProjectFolders, completedTask, returnCardToHome };
 

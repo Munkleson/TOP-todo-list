@@ -1,4 +1,4 @@
-import { NewList, listArray, listIdentifier, projectArray } from './constructors.js'
+import { listArray, projectArray } from './constructors.js'
 import { completedTask, returnCardToHome } from './domFunctions.js';
 import { currentFolder, folderActive } from './projectDisplay.js';
 

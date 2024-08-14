@@ -1,6 +1,6 @@
-import { projectArray, NewProject, projectIdentifier, listArray } from './constructors.js';
+import { projectArray, listArray } from './constructors.js';
 import { reopenListCards, reopenProjectFolders } from './domFunctions.js';
-import { innerListCardCreate, newListCard } from './listDisplay.js';
+import { innerListCardCreate } from './listDisplay.js';
 
 let folderActive = false;
 let currentFolder;
@@ -64,7 +64,6 @@ const newProjectFolder = (title, description, projectIdentifier) => {
         document.body.append(closeFolderButton);
 
         //////// opens the folder to view all the cards within
-
         const innerFolder = document.createElement('div');
         innerFolder.classList.add('innerFolder');
         document.body.append(innerFolder);
@@ -75,8 +74,6 @@ const newProjectFolder = (title, description, projectIdentifier) => {
         projectArray[projectIndex].lists.forEach(element => {
             innerListCardCreate(element.title, element.description, element.dueDate, element.priority, element.notes, element.listIdentifier);
         });
-
-
 
         //////// when you close a folder - reopens the home page and restores DOM
         closeFolderButton.addEventListener('click', (event) => {
@@ -96,8 +93,5 @@ const newProjectFolder = (title, description, projectIdentifier) => {
         });
     });
 };
-
-
-
 
 export { newProjectFolder, folderActive, currentFolder };

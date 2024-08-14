@@ -76,15 +76,23 @@ p {
     background-size: contain;
     background-repeat: no-repeat;
     border: none;
-    margin: 10px;
+    margin: 20px;
+    transition: 0.3s;
 }
 
-.projectFolder:focus {
+/* .projectFolder:focus {
     border: 5px red solid;
+} */
+
+.projectFolder:active {
+    transform: translateY(10px);
+    transition: 0.1s;
 }
 
 .projectFolderHover {
-    border: 5px red solid;
+    /* border: 5px red solid; */
+    transform: scale(1.3);
+    transition: 0.3s;
 }
 
 .listFormContainer {

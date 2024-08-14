@@ -1,8 +1,13 @@
-import { newListForm, newListFormActive, newProjectForm, newProjectFormActive } from "./domFunctions";
-import { NewList, listArray, listIdentifier, projectArray, NewProject, projectIdentifier } from "./constructors";
+import { newListForm, newProjectForm } from "./domFunctions";
+import { NewList, listArray, projectArray, NewProject } from "./constructors";
 import './styles.css';
 import { newListCard, undoListDelete, deletedListCards } from "./listDisplay";
 import { folderActive, newProjectFolder } from "./projectDisplay";
+
+let newListFormActive = false;
+let newProjectFormActive = false;
+let listIdentifier = 0;
+let projectIdentifier = 0;
 
 //// creates the popup window to create a form to enter a new list
 const newListButton = document.getElementsByClassName('newListButton');
@@ -28,7 +33,7 @@ newListButton[0].addEventListener('click', () => {
                 const formPriority = form.elements['priority'].value;
                 const formNotes = form.elements['notes'].value;
     
-                listArray.push(new NewList(formTitle, formDescription, formDueDate, formPriority, formNotes));
+                listArray.push(new NewList(formTitle, formDescription, formDueDate, formPriority, formNotes, listIdentifier));
                 newListCard(formTitle, formDescription, formDueDate, formPriority, formNotes, listIdentifier);
     
                 listFormContainer.remove();
@@ -51,7 +56,6 @@ undoListDeleteButton.addEventListener('click', () => {
         undoListDelete();
     }
 });
-
 
 //// new project form popup
 const newProjectButton = document.querySelector('.newProjectButton');
@@ -90,8 +94,6 @@ newProjectButton.addEventListener('click', () => {
         }
     }
 })
-
-// export { flatpickr };
 
 
 
